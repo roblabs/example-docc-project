@@ -39,14 +39,14 @@ jobs:
       uses: actions/checkout@v4
     - name: Generate Combined Documentation
       run: |
-        swift package --disable-sandbox generate-documentation |
-          --enable-experimental-combined-documentation |
-          --enable-mentioned-in |
-          --enable-experimental-external-link-support |
-          --target ExampleDocs |
-          --target SampleLibrary |
-          --output-path docs |
-          --transform-for-static-hosting |
+        swift package --disable-sandbox generate-documentation \
+          --enable-experimental-combined-documentation \
+          --enable-mentioned-in \
+          --enable-experimental-external-link-support \
+          --target ExampleDocs \
+          --target SampleLibrary \
+          --output-path docs \
+          --transform-for-static-hosting \
           --hosting-base-path /
 
   integration-test:
