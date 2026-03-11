@@ -13,21 +13,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  # linux:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   strategy:
-  #     matrix:
-  #       image: ["swift:6.0", "swift:6.1", "swift:6.2"]
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        image: ["swift:6.0", "swift:6.1", "swift:6.2"]
 
-  #   container:
-  #     image: ${{ matrix.image }}
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v4
-  #   - name: Build
-  #     run: |
-  #       swift build
+    container:
+      image: ${{ matrix.image }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build
+      run: |
+        swift build
 
   docc:
     runs-on: ubuntu-latest
@@ -54,27 +54,27 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
 
-  # integration-test:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   container:
-  #     image: swift:6.2
-  #   steps:
-  #   - name: Set up Node.js
-  #     uses: actions/setup-node@v4
-  #     with:
-  #       node-version: lts/*
-  #   - name: Checkout
-  #     uses: actions/checkout@v4
-  #   - name: clean install node dependencies
-  #     run: npm ci
-  #   - name: Install integration test dependencies
-  #     run: npx playwright install --with-deps
-  #   - name: Run the tests
-  #     run: npx playwright test
-  #   - uses: actions/upload-artifact@v4
-  #     if: ${{ !cancelled() }}
-  #     with:
-  #       name: playwright-report
-  #       path: playwright-report/
-  #       retention-days: 30
+  integration-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: swift:6.2
+    steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: clean install node dependencies
+      run: npm ci
+    - name: Install integration test dependencies
+      run: npx playwright install --with-deps
+    - name: Run the tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
